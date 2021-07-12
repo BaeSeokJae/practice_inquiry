@@ -1,10 +1,20 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { InquiryModule } from './inquiry/inquiry.module';
+import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import * as ormconfig from '../ormconfig';
 
 @Module({
-  imports: [],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    InquiryModule,
+    TypeOrmModule.forRoot(ormconfig),
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, InquiryModule],
 })
 export class AppModule {}
